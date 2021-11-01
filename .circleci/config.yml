@@ -23,5 +23,5 @@ workflows:
           filters:
             branches:
               only: master
-            requires:
-              - hugo/build
+          requires:
+            - hugo/build
