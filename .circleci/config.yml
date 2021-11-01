@@ -12,7 +12,8 @@ jobs:
           at: my-site
       - aws-cli/setup:
           profile-name: circleci
-      - run: aws s3 cp public s3://etaipe-blog/ --recursive --acl public-read
+      - run: ls -la
+      - run: aws s3 cp my-site s3://etaipe-blog/ --recursive --acl public-read
 
 workflows:
   main:
