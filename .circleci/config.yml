@@ -12,8 +12,8 @@ jobs:
           at: my-site
       - aws-cli/setup:
           profile-name: circleci
-      - run: ls -la
-      - run: aws s3 cp my-site/public s3://etaipe-blog/ --recursive --acl public-read
+      - run: BUCKET=$(aws ssm get-parameter --name "/app/portfolio-app/bucket" | jq ".Parameter.Value")
+      - run: aws s3 cp my-site/public s3://$BUCKET/ --recursive --acl public-read
 
 workflows:
   main:
