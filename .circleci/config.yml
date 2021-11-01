@@ -6,6 +6,7 @@ orbs:
 
 jobs:
   - deploy:
+      executor: aws-cli/default
       steps:
         - attach_workspace:
             at: my-site
@@ -20,6 +21,7 @@ workflows:
           html-proofer: true
           version: '0.88'
       - deploy:
+          context: aws
           filters:
             branches:
               only: master
