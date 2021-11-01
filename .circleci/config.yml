@@ -12,8 +12,11 @@ jobs:
           at: my-site
       - aws-cli/setup:
           profile-name: circleci
-      - run: BUCKET=$(aws ssm get-parameter --name "/app/portfolio-app/bucket" | jq ".Parameter.Value")
-      - run: aws s3 cp my-site/public s3://$BUCKET/ --recursive --acl public-read
+      - run:
+          name: Push files
+          command: |
+            BUCKET=$(aws ssm get-parameter --name "/app/portfolio-app/bucket" | jq ".Parameter.Value")
+            aws s3 cp my-site/public s3://$BUCKET/ --recursive --acl public-read
 
 workflows:
   main:
