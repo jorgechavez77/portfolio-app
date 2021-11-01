@@ -2,6 +2,16 @@ version: 2.1
 
 orbs:
   hugo: circleci/hugo@1.2.2
+  aws-cli: circleci/aws-cli@2.0.3
+
+jobs:
+  - deploy:
+      steps:
+        - attach_workspace:
+            at: my-site
+        - aws-cli/setup:
+            profile-name: circleci
+        - run: aws s3 cp public s3://etaipe-blog/ --recursive --acl public-read
 
 workflows:
   main:
@@ -9,3 +19,9 @@ workflows:
       - hugo/build:
           html-proofer: true
           version: '0.88'
+      - deploy:
+          filters:
+            branches:
+              only: master
+            requires:
+              - hugo/build
